@@ -6,7 +6,14 @@ my_string::my_string(const char *str)
     if(str != nullptr){
 
         len = strlen(str);
-        this->str = new char[len + 1];
+        try{
+
+            this->str = new char[len + 1];
+        }
+        catch(const std::bad_alloc &err){
+            throw;
+        }
+
         strcpy(this->str, str);
     }
     else{
@@ -20,7 +27,15 @@ my_string::my_string(const char *str, size_t n)
     if(str != nullptr){
 
         len = strlen(str);
-        this->str = new char[len + 1];
+
+        try{
+
+            this->str = new char[len + 1];
+        }
+        catch(const std::bad_alloc &err){
+            throw;
+        }
+
         memcpy(this->str, str, n);
         this->str[n] = '\0';
     }
@@ -31,9 +46,16 @@ my_string::my_string(const char *str, size_t n)
 }
 
 my_string::my_string(size_t n, char c):
-    len(n),
-    str(new char[len + 1])
+    len(n)
 {
+    try{
+
+        str = new char[len + 1];
+    }
+    catch(const std::bad_alloc &err){
+        throw;
+    }
+
     memset(str, c, n);
     str[len] = '\0';
 }
@@ -41,7 +63,14 @@ my_string::my_string(size_t n, char c):
 my_string::my_string(const my_string &obj)
 {
     len = obj.len;
-    str = new char[this->len + 1];
+    try{
+
+        str = new char[len + 1];
+    }
+    catch(const std::bad_alloc &err){
+        throw;
+    }
+
     strcpy(str, obj.str);
 }
 
@@ -65,7 +94,15 @@ const my_string &my_string::operator=(const my_string &obj)
         this->~my_string();
 
         len = obj.len;
-        str = new char[len + 1];
+
+        try{
+
+            str = new char[len + 1];
+        }
+        catch(const std::bad_alloc &err){
+            throw;
+        }
+
         strcpy(str, obj.str);
     }
     return *this;
@@ -90,7 +127,16 @@ my_string &my_string::append(const char *s, size_t n)
     size_t old_len = len;
     size_t new_len = len + n;
 
-    char *tmp_str = new char[new_len + 1];
+    char *tmp_str = nullptr;
+
+    try{
+
+        tmp_str = new char[new_len + 1];
+    }
+    catch(const std::bad_alloc &err){
+        throw;
+    }
+
     memcpy(tmp_str, str, old_len);
     strcpy(tmp_str + old_len, s);
 
