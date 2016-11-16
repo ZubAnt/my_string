@@ -8,28 +8,16 @@ using namespace std;
 
 int main()
 {
-
     try{
         test_my_string();
         test_errors();
     }
-    catch(std::runtime_error &s){
-        cout << s.what() << endl;
+    catch(std::runtime_error &err){
+        cout << err.what() << endl;
     }
-
-//    my_string Hello = "Hello";
-//    my_string World = "World";
-//    my_string HW;
-
-//    cout << "Hello = " << Hello << "; World = " << World << endl;
-
-//    HW =Hello + " World";
-//    cout << "Hello World = " << HW << endl;
-
-//    World = Hello;
-//    cout << "Hello = " << Hello << "; World = " << World << endl;
-
-
+    catch(std::bad_alloc &err){
+        cout << err.what() << endl;
+    }
 
     return 0;
 }
